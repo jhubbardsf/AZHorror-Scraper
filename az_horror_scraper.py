@@ -17,9 +17,8 @@ for year in years:
     for month in months:
         # Make a request
         page = requests.get(f'http://a-zhorror.com/more-horror/horror-release-roundup-{month}-{year}')
-        time.sleep(5)
+        time.sleep(0.5)
         this_month = 0
-
 
         soup = BeautifulSoup(page.content, 'html.parser')
         sqs_block_contents = soup.select('.sqs-block-content')
@@ -29,18 +28,15 @@ for year in years:
             title = elem.select('h1 > strong')
             if (len(title) > 0):
                 movie_title = title[0].text
-                movie_title = re.split('[0-9]{2}/[0-9]{2}/[0-9]{4}', movie_title)[0]
-
-                # Unneeded
-                movie_title = re.split('[0-9]{1}/[0-9]{2}/[0-9]{4}', movie_title)[0]
-                # print(movie_title)
+                # Fix old movie formatting problems
+                movie_title = re.split('[0-9]{1,2}/[0-9]{2}/[0-9]{4}', movie_title)[0]
                 movie_titles.append(movie_title)
                 this_month += 1
 
         # Remove last element from array which is an issue with their site
         if (len(movie_titles) > 0):
             movie_titles.pop()
-        print(f'{month} of {year} is done... {"error" if ((this_month - 1) == -1) else (this_month - 1)}')
+        print(f'{month} of {year} is done... {"error" if ((this_month - 1) == -1) else (this_month)}')
 
 
 
