@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 
 # Needed variables for later
 months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"]
-years = ["2018", "2019", "2020"]
+years = ["2018", "2019", "2020", "2021"]
 
 # Create list for upcoming movie titles
 movie_titles = []
@@ -31,7 +31,7 @@ for year in years:
         # Remove last element from array which is an issue with their site
         if (len(movie_titles) > 0):
             movie_titles.pop()
-        print(f'{month} of {year} is done... {this_month - 1}')
+        print(f'{month} of {year} is done... {"error" if ((this_month - 1) == -1) else (this_month - 1)}')
 
 
 
